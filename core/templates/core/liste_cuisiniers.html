@@ -1,0 +1,28 @@
+ {% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Nos cuisiniers - RestaurantPlus{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Nos cuisiniers disponibles</h1>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for cuisinier in cuisiniers %}
+  <div class="col">
+    <div class="card h-100 shadow-sm">
+      {% if cuisinier.image %}
+      <img src="{{ cuisinier.image.url }}" class="card-img-top" alt="{{ cuisinier.nom }}">
+      {% else %}
+      <img src="{% static 'images/default-cuisinier.jpg' %}" class="card-img-top" alt="Image par défaut">
+      {% endif %}
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">{{ cuisinier.nom }}</h5>
+        <p class="card-text">{{ cuisinier.bio|truncatewords:20 }}</p>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>Aucun cuisinier disponible pour le moment.</p>
+  {% endfor %}
+</div>
+{% endblock %}

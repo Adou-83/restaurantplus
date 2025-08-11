@@ -1,0 +1,30 @@
+ {% extends 'core/base.html' %}
+{% load static humanize %}
+
+{% block title %}Liste des plats - RestaurantPlus{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Nos plats</h1>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for plat in plats %}
+  <div class="col">
+    <div class="card h-100 shadow-sm">
+      {% if plat.image %}
+      <img src="{{ plat.image.url }}" class="card-img-top" alt="{{ plat.nom }}">
+      {% else %}
+      <img src="{% static 'images/default-plat.jpg' %}" class="card-img-top" alt="Image par défaut">
+      {% endif %}
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">{{ plat.nom }}</h5>
+        <p class="card-text">{{ plat.description|truncatewords:20 }}</p>
+        <p class="fw-bold mt-auto">{{ plat.prix|intcomma }} FCFA</p>
+        <a href="{% url 'ajouter_au_panier' 'plat' plat.id %}" class="btn btn-primary mt-2">Ajouter au panier</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>Aucun plat disponible pour le moment.</p>
+  {% endfor %}
+</div>
+{% endblock %}

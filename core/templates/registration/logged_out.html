@@ -1,0 +1,10 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<div style="max-width: 500px; margin: auto; text-align: center; padding: 40px;">
+    <h2>Vous êtes déconnecté</h2>
+    <p>Merci de votre visite. À bientôt !</p>
+    <a href="{% url 'login' %}">Se reconnecter</a>
+</div>
+{% endblock %}

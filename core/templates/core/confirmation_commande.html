@@ -1,0 +1,10 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2>Merci pour votre commande !</h2>
+    <p>Nous vous contacterons très bientôt pour la livraison ou la récupération de votre commande.</p>
+    <a href="{% url 'accueil' %}" class="btn btn-primary">Retour à l'accueil</a>
+</div>
+{% endblock %}

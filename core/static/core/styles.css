@@ -1,0 +1,48 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #fafafa;
+    color: #333;
+}
+
+/* Header */
+header {
+    background: #b71c1c;
+    color: white;
+    padding: 15px 0;
+}
+header h1 {
+    margin: 0;
+}
+header nav a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* Main content */
+main {
+    padding: 20px 0;
+}
+
+/* Footer */
+footer {
+    background: #212121;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+}

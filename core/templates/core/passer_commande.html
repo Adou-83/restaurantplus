@@ -1,0 +1,37 @@
+ <!-- templates/core/passer_commande.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Passer une commande</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <h3>Plats</h3>
+    {% if plats %}
+        <ul>
+            {% for plat in plats %}
+                <li>{{ plat.nom }} - {{ plat.prix }} €</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun plat disponible.</p>
+    {% endif %}
+
+    <h3>Produits du marché</h3>
+    {% if produits %}
+        <ul>
+            {% for produit in produits %}
+                <li>{{ produit.nom }} - {{ produit.prix }} €</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun produit disponible.</p>
+    {% endif %}
+
+    <button type="submit">Valider la commande</button>
+</form>
+{% endblock %}

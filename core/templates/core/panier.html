@@ -1,0 +1,50 @@
+ {% extends 'core/base.html' %}
+ {% load static %}
+
+{% block title %}Votre Panier - RestaurantPlus{% endblock %}
+
+{% block content %}
+<h1 class="mb-4 text-center">Votre Panier</h1>
+
+{% if panier %}
+<div class="table-responsive">
+  <table class="table table-striped table-bordered align-middle text-center">
+    <thead class="table-dark">
+      <tr>
+        <th>Produit</th>
+        <th>Quantité</th>
+        <th>Prix unitaire (FCFA)</th>
+        <th>Total (FCFA)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cle, item in panier.items %}
+      <tr>
+        <td>{{ item.nom }}</td>
+        <td>{{ item.quantite }}</td>
+        <td>{{ item.prix|floatformat:0 }}</td>
+        <td>{{ item.total_ligne|floatformat:0 }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="3" class="text-end">Total général :</th>
+        <th>{{ total|floatformat:0 }} FCFA</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<div class="d-flex justify-content-between">
+  <a href="{% url 'vider_panier' %}" class="btn btn-danger">Vider le panier</a>
+  <a href="{% url 'passer_commande' %}" class="btn btn-success">Passer la commande</a>
+</div>
+
+{% else %}
+<div class="alert alert-info text-center" role="alert">
+  Votre panier est vide. <a href="{% url 'accueil' %}" class="alert-link">Retour à l'accueil</a>
+</div>
+{% endif %}
+
+{% endblock %}

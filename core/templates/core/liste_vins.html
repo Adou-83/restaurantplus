@@ -1,0 +1,29 @@
+ {% extends 'core/base.html' %}
+{% load static humanize %}
+
+{% block title %}Nos vins - RestaurantPlus{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Nos vins</h1>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for vin in vins %}
+  <div class="col">
+    <div class="card h-100 shadow-sm">
+      {% if vin.image %}
+      <img src="{{ vin.image.url }}" class="card-img-top" alt="{{ vin.nom }}">
+      {% else %}
+      <img src="{% static 'images/default-vin.jpg' %}" class="card-img-top" alt="Image par défaut">
+      {% endif %}
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">{{ vin.nom }}</h5>
+        <p class="fw-bold mt-auto">{{ vin.prix|intcomma }} FCFA</p>
+        <a href="{% url 'ajouter_au_panier' 'vin' vin.id %}" class="btn btn-warning mt-2">Ajouter au panier</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>Aucun vin disponible pour le moment.</p>
+  {% endfor %}
+</div>
+{% endblock %}
