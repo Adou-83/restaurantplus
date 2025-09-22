@@ -1,37 +1,22 @@
- <!-- templates/core/passer_commande.html -->
-
 {% extends 'core/base.html' %}
-{% load static %}
 
 {% block content %}
-<h2>Passer une commande</h2>
+<h2>Passer commande</h2>
 
-<form method="post">
+<form method="post" class="mb-4">
     {% csrf_token %}
     {{ form.as_p }}
 
-    <h3>Plats</h3>
-    {% if plats %}
-        <ul>
-            {% for plat in plats %}
-                <li>{{ plat.nom }} - {{ plat.prix }} €</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun plat disponible.</p>
-    {% endif %}
+    <h4>Panier</h4>
+    <ul class="list-group mb-3">
+        {% for cle, item in panier.items %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ item.nom }} x{{ item.quantite }}
+            <span>{{ item.prix|floatformat:0 }} FCFA</span>
+        </li>
+        {% endfor %}
+    </ul>
 
-    <h3>Produits du marché</h3>
-    {% if produits %}
-        <ul>
-            {% for produit in produits %}
-                <li>{{ produit.nom }} - {{ produit.prix }} €</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun produit disponible.</p>
-    {% endif %}
-
-    <button type="submit">Valider la commande</button>
+    <button type="submit" class="btn btn-primary">Valider la commande</button>
 </form>
 {% endblock %}

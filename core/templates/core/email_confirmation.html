@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de commande</title>
+</head>
+<body>
+    <h2>Merci pour votre commande, {{ commande.nom_client }} !</h2>
+    <p>Votre commande #{{ commande.id }} a bien été enregistrée.</p>
+
+    <h4>Détails :</h4>
+    <ul>
+        {% for ligne in commande.lignes.all %}
+            <li>{{ ligne.nom_produit }} x{{ ligne.quantite }} - {{ ligne.prix_unitaire }} FCFA</li>
+        {% endfor %}
+    </ul>
+    <p><strong>Total :</strong> {{ commande.quantite }} articles</p>
+    <p>Statut actuel : {{ commande.statut }}</p>
+    <p>Nous vous remercions pour votre confiance !</p>
+</body>
+</html>

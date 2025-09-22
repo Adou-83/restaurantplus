@@ -53,12 +53,13 @@ class VinAdmin(admin.ModelAdmin):
     image_tag.short_description = 'Image'
 
 # Admin pour Commande avec liste et filtres
+ 
 @admin.register(Commande)
 class CommandeAdmin(admin.ModelAdmin):
-    list_display = ('nom_client', 'telephone', 'produit', 'quantite', 'date_commande')
-    list_filter = ('date_commande',)
-    search_fields = ('nom_client', 'telephone')
-
+    list_display = ('id', 'nom_client', 'telephone', 'statut', 'date_commande')
+    list_filter = ('statut', 'date_commande')
+    search_fields = ('nom_client', 'telephone', 'email')
+    list_editable = ('statut',)
 # Admin pour ReservationCuisinier
 @admin.register(ReservationCuisinier)
 class ReservationCuisinierAdmin(admin.ModelAdmin):

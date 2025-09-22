@@ -1,0 +1,77 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Résultats de recherche{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h4>Résultats pour : "{{ query }}"</h4>
+
+    {% if plats %}
+        <h5 class="mt-3">Plats</h5>
+        <div class="row">
+            {% for plat in plats %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        {% if plat.image %}
+                            <img src="{{ plat.image.url }}" class="card-img-top" alt="{{ plat.nom }}">
+                        {% else %}
+                            <img src="{% static 'images/default_plat.png' %}" class="card-img-top" alt="Image par défaut">
+                        {% endif %}
+                        <div class="card-body">
+                            <h6 class="card-title">{{ plat.nom }}</h6>
+                            <p class="card-text">{{ plat.prix }} FCFA</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if vins %}
+        <h5 class="mt-4">Vins</h5>
+        <div class="row">
+            {% for vin in vins %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        {% if vin.image %}
+                            <img src="{{ vin.image.url }}" class="card-img-top" alt="{{ vin.nom }}">
+                        {% else %}
+                            <img src="{% static 'images/default_vin.png' %}" class="card-img-top" alt="Image par défaut">
+                        {% endif %}
+                        <div class="card-body">
+                            <h6 class="card-title">{{ vin.nom }}</h6>
+                            <p class="card-text">{{ vin.prix }} FCFA</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if produits %}
+        <h5 class="mt-4">Produits du marché</h5>
+        <div class="row">
+            {% for produit in produits %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        {% if produit.image %}
+                            <img src="{{ produit.image.url }}" class="card-img-top" alt="{{ produit.nom }}">
+                        {% else %}
+                            <img src="{% static 'images/default_produit.png' %}" class="card-img-top" alt="Image par défaut">
+                        {% endif %}
+                        <div class="card-body">
+                            <h6 class="card-title">{{ produit.nom }}</h6>
+                            <p class="card-text">{{ produit.prix }} FCFA</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if not plats and not vins and not produits %}
+        <p class="mt-3">Aucun résultat trouvé pour "{{ query }}".</p>
+    {% endif %}
+</div>
+{% endblock %}

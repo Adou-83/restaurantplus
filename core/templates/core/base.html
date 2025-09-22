@@ -1,78 +1,119 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}RestaurantPlus{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+
     {% load static %}
+
     <style>
-      body {
-        background-color: #f8f9fa;
-      }
-      .navbar-brand {
-        font-weight: bold;
-        letter-spacing: 1px;
-      }
-      footer {
-        background-color: #343a40;
-        color: #fff;
-      }
-      footer a {
-        color: #ffc107;
-        text-decoration: none;
-      }
-      footer a:hover {
-        text-decoration: underline;
-      }
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+        footer {
+            background-color: #343a40;
+            color: #ddd;
+        }
+        footer a {
+            color: #ffc107;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        footer a:hover {
+            text-decoration: underline;
+            color: #fff;
+        }
+        .btn-sm {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
-  <div class="container">
-    <a class="navbar-brand" href="{% url 'accueil' %}">🍽 RestaurantPlus</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'accueil' %}"><i class="bi bi-egg-fried"></i> RestaurantPlus</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarMenu">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="{% url 'accueil' %}">Accueil</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'liste_plats' %}">Plats</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'liste_vins' %}">Vins</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'liste_produits_marche' %}">Marché</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'liste_cuisiniers' %}">Cuisiniers</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'voir_panier' %}">Panier 🛒</a></li>
-      </ul>
-      <ul class="navbar-nav ms-auto">
-        {% if user.is_authenticated %}
-          <li class="nav-item"><span class="nav-link">👋 Bonjour {{ user.username }}</span></li>
-          <li class="nav-item"><a class="btn btn-outline-light btn-sm ms-2" href="{% url 'logout' %}">Déconnexion</a></li>
-        {% else %}
-          <li class="nav-item"><a class="btn btn-light btn-sm me-2" href="{% url 'login' %}">Connexion</a></li>
-          <li class="nav-item"><a class="btn btn-warning btn-sm" href="{% url 'inscription' %}">S’inscrire</a></li>
-        {% endif %}
-      </ul>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+            <!-- Liens de gauche -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{% url 'accueil' %}"><i class="bi bi-house-door"></i> Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'liste_plats' %}"><i class="bi bi-egg-fried"></i> Plats</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'liste_vins' %}"><i class="bi bi-cup-straw"></i> Vins</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'liste_produits_marche' %}"><i class="bi bi-basket"></i> Marché</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'liste_cuisiniers' %}"><i class="bi bi-person-workspace"></i> Cuisiniers</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'voir_panier' %}"><i class="bi bi-cart"></i> Panier</a></li>
+            </ul>
+
+            <!-- Formulaire de recherche -->
+            <form class="d-flex ms-3" method="get" action="{% url 'recherche' %}">
+                <input class="form-control me-2" type="search" name="q" placeholder="Rechercher..." aria-label="Rechercher">
+                <button class="btn btn-warning" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+
+            <!-- Liens de droite (auth) -->
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><span class="nav-link">👋 Bonjour <strong>{{ user.username }}</strong></span></li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm ms-2" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="btn btn-light btn-sm me-2" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-warning btn-sm" href="{% url 'inscription' %}"><i class="bi bi-person-plus"></i> S’inscrire</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
 
+<!-- CONTENU -->
 <div class="container my-4">
-  {% block content %}
-  {% endblock %}
+    {% block content %}
+    {% endblock %}
 </div>
 
+<!-- FOOTER -->
 <footer class="text-center py-4 mt-5">
-  <div class="container">
-    <p class="mb-1">© 2025 RestaurantPlus - Tous droits réservés</p>
-    <p class="mb-0">
-      <a href="#">Mentions légales</a> | 
-      <a href="#">Contact</a>
-    </p>
-  </div>
+    <div class="container">
+        <p class="mb-1">© 2025 <strong>RestaurantPlus</strong> - Tous droits réservés</p>
+        <p class="mb-0">
+            <a href="#"><i class="bi bi-file-earmark-text"></i> Mentions légales</a> | 
+            <a href="#"><i class="bi bi-envelope"></i> Contact</a> | 
+            <a href="#"><i class="bi bi-shield-lock"></i> Politique de confidentialité</a>
+        </p>
+    </div>
 </footer>
 
+<!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

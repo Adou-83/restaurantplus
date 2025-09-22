@@ -1,0 +1,46 @@
+ {% extends 'core/base.html' %}
+
+{% block title %}Mes commandes{% endblock %}
+
+{% block content %}
+<h2>Mes commandes</h2>
+
+{% if user.is_authenticated %}
+    <p>Voici toutes vos commandes passées :</p>
+{% else %}
+    <p>Pour suivre vos commandes, entrez votre email :</p>
+    <form method="get" class="mb-3">
+        <input type="email" name="email" placeholder="Votre email" class="form-control w-50 d-inline-block" required>
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </form>
+{% endif %}
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Produits</th>
+            <th>Quantité</th>
+            <th>Statut</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if commandes %}
+            {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.date_commande|date:"d/m/Y H:i" }}</td>
+                <td>{{ commande.produit }}</td>
+                <td>{{ commande.quantite }}</td>
+                <td>{{ commande.statut }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5" class="text-center">Aucune commande trouvée.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}
