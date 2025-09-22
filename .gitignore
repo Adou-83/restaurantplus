@@ -6,6 +6,8 @@ env/
 __pycache__/
 *.pyc
 
+# Base de données SQLite (non utilisée car PostgreSQL est en place)
+db.sqlite3
 
 # Fichiers temporaires, logs
 *.log
@@ -14,4 +16,5 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
+# Fichiers sensibles d'environnement
 .env
