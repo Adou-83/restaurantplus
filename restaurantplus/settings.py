@@ -1,29 +1,20 @@
+"""
+Django settings for restaurantplus project - Ready for Railway
+"""
+
 from pathlib import Path
 import os
 import dj_database_url
 
+# Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ========================
 # SECURITY
-# ========================
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'change-this-secret-in-production')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+ALLOWED_HOSTS = ['*']  # temporaire pour Railway, tu pourras restreindre plus tard
 
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "django-insecure-dev-key-only-for-local"
-)
-
-DEBUG = os.environ.get("DEBUG", "False") == "True"
-
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS",
-    "localhost,127.0.0.1"
-).split(",")
-
-# ========================
-# APPLICATIONS
-# ========================
-
+# Applications
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -65,22 +56,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'restaurantplus.wsgi.application'
 
-# ========================
-# DATABASE
-# ========================
-
+# Database - Railway PostgreSQL
 DATABASES = {
-    "default": dj_database_url.config(
-        default="sqlite:///" + str(BASE_DIR / "db.sqlite3"),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
 }
 
-# ========================
-# PASSWORDS
-# ========================
-
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -88,42 +69,31 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# ========================
-# INTERNATIONALIZATION
-# ========================
-
+# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# ========================
-# STATIC & MEDIA
-# ========================
-
+# Static & Media
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# ========================
-# AUTH
-# ========================
-
+# Login redirection
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
 
+# Default primary key
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ========================
-# EMAIL (optionnel pour l’instant)
-# ========================
-
+# Email (optionnel, laisse vide pour prod si pas utilisé)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
