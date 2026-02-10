@@ -18,3 +18,5 @@ Thumbs.db
 
 # Fichiers sensibles d'environnement
 .env
+# Ignorer l'ancien settings pour ne pas exposer les secrets
+restaurantplus/settings_copie.py

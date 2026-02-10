@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'restaurantplus.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'restaurantplus_db',   # nom de la base
+        'NAME': 'restaurant_plus',   # nom de la base
         'USER': 'postgres',            # utilisateur par défaut
         'PASSWORD': 'seigneur123',  # mot de passe PostgreSQL
         'HOST': 'localhost',
@@ -126,6 +126,9 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_REDIRECT_URL = '/'
+# Après déconnexion, rediriger vers la page de login
+LOGOUT_REDIRECT_URL = '/login/'
+
 
 
 # Default primary key field type
