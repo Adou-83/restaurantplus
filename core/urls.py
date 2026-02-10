@@ -21,6 +21,7 @@ urlpatterns = [
     path('marche/', views.liste_produits_marche, name='liste_produits_marche'),
      path('inscription/', views.inscription, name='inscription'),
      path('logout/', views.deconnexion, name='logout'),
+    path('profil/', views.profil, name='profil'),
 
 ]
 

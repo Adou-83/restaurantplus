@@ -15,9 +15,14 @@
 
     <style>
         body {
-            background-color: #f8f9fa;
+            background-image: url("{% static 'core/img/background.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
         }
+
         .navbar-brand {
             font-weight: bold;
             letter-spacing: 1px;
@@ -79,6 +84,7 @@
             <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item"><span class="nav-link">👋 Bonjour <strong>{{ user.username }}</strong></span></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'profil' %}"><i class="bi bi-person-circle"></i> Profil</a></li>
                     <li class="nav-item">
                         <a class="btn btn-outline-light btn-sm ms-2" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
                     </li>

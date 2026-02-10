@@ -8,6 +8,9 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.db.models import Q
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from .forms import ProfilForm
 
 print("core/views.py chargé") 
 
@@ -165,17 +168,18 @@ def mes_commandes(request):
     return render(request, 'core/mes_commandes.html', {'commandes': commandes})
 
 # -------------------- Auth --------------------
+
 def inscription(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Inscription réussie. Connectez-vous !")
-            return redirect('login')
+            user = form.save()  # création de l'utilisateur
+            login(request, user)  # connexion automatique
+            messages.success(request, "Bienvenue ! Votre compte a été créé avec succès ✅")
+            return redirect('/')  # redirection vers la page d'accueil
     else:
         form = UserCreationForm()
     return render(request, 'registration/inscription.html', {'form': form})
-
 def deconnexion(request):
     logout(request)
     return redirect('login')
@@ -188,3 +192,24 @@ def envoyer_email_confirmation(commande):
     html_message = render_to_string('core/email_confirmation.html', {'commande': commande})
     message = strip_tags(html_message)
     send_mail(sujet, message, None, [commande.email], html_message=html_message)
+
+
+    
+
+@login_required
+def profil(request):
+    commandes = Commande.objects.filter(client=request.user).order_by('-date_commande')
+    
+    if request.method == 'POST':
+        form = ProfilForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "✅ Profil mis à jour avec succès.")
+            return redirect('profil')
+    else:
+        form = ProfilForm(instance=request.user)
+
+    return render(request, 'registration/profil.html', {
+        'form': form,
+        'commandes': commandes
+    })
