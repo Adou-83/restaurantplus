@@ -1,5 +1,5 @@
 """
-Django settings for restaurantplus project - Ready for Railway
+Django settings for restaurantplus project - Railway Production Ready
 """
 
 from pathlib import Path
@@ -19,7 +19,7 @@ SECRET_KEY = os.environ.get(
     'change-this-secret-in-production'
 )
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = ['*']  # temporaire pour Railway, tu pourras restreindre plus tard
+ALLOWED_HOSTS = ['*']  # tu pourras restreindre plus tard
 
 # -----------------------
 # Applications
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 # -----------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # pour les static en prod
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # pour les static files en prod
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -73,11 +73,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'restaurantplus.wsgi.application'
 
 # -----------------------
-# Database (Railway PostgreSQL)
+# Database - PostgreSQL Railway
 # -----------------------
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),  # Utilise uniquement DATABASE_URL
+        default=os.environ.get('DATABASE_URL'),  # IMPORTANT : utiliser DATABASE_URL Railway
         conn_max_age=600,
         ssl_require=True
     )
