@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-defaultkey")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["*"]  # Ou ton domaine Railway
+ALLOWED_HOSTS = ["*"]  # Sur Render, "*" suffit pour tester, sinon mets ton domaine
 
 # =====================
 # Applications
@@ -25,9 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.humanize',  # <-- Humanize activé
-    # Tes apps
-    'core',
+    'django.contrib.humanize',  # Pour formatage humain
+    'core',  # Ton application principale
 ]
 
 # =====================
@@ -46,6 +45,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'restaurantplus.urls'
 
+# =====================
+# Templates
+# =====================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -65,7 +67,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'restaurantplus.wsgi.application'
 
 # =====================
-# Base de données (Railway)
+# Base de données (Render / DATABASE_URL)
 # =====================
 DATABASES = {
     'default': dj_database_url.config(
@@ -79,10 +81,10 @@ DATABASES = {
 # Validation des mots de passe
 # =====================
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # =====================
@@ -94,7 +96,7 @@ USE_I18N = True
 USE_TZ = True
 
 # =====================
-# Statics et Media
+# Fichiers statiques et médias
 # =====================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -102,7 +104,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Whitenoise pour servir fichiers statiques
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # =====================
