@@ -2,7 +2,9 @@ import os
 from pathlib import Path
 import dj_database_url
 
+# =====================
 # Chemin de base du projet
+# =====================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # =====================
@@ -11,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-defaultkey")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["*"]  # Met le domaine Railway ici si tu veux
+ALLOWED_HOSTS = ["*"]  # Ou ton domaine Railway
 
 # =====================
 # Applications
@@ -23,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.humanize',  # <-- Ajoute cette ligne
+    'django.contrib.humanize',  # <-- Humanize activé
     # Tes apps
     'core',
 ]
@@ -33,7 +35,7 @@ INSTALLED_APPS = [
 # =====================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Pour servir les fichiers statiques sur Railway
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Pour fichiers statiques
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -63,32 +65,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'restaurantplus.wsgi.application'
 
 # =====================
-# Base de données
+# Base de données (Railway)
 # =====================
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),  # <-- Railway DATABASE_URL
+        default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
         ssl_require=True
     )
 }
 
 # =====================
-# Mot de passe
+# Validation des mots de passe
 # =====================
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
 # =====================
@@ -108,7 +102,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Whitenoise pour fichiers statiques
+# Whitenoise pour servir fichiers statiques
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # =====================
