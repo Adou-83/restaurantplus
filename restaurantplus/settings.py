@@ -13,7 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-defaultkey")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["*"]  # Sur Render, "*" suffit pour tester, sinon mets ton domaine
+# Domaine Render en production
+ALLOWED_HOSTS = ["restaurantplus.onrender.com"]
 
 # =====================
 # Applications
@@ -25,8 +26,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.humanize',  # Pour formatage humain
-    'core',  # Ton application principale
+    'django.contrib.humanize',  # Humanize activé
+    # Tes apps
+    'core',
 ]
 
 # =====================
@@ -34,7 +36,7 @@ INSTALLED_APPS = [
 # =====================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Pour fichiers statiques
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Pour servir fichiers statiques
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -45,9 +47,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'restaurantplus.urls'
 
-# =====================
-# Templates
-# =====================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -67,11 +66,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'restaurantplus.wsgi.application'
 
 # =====================
-# Base de données (Render / DATABASE_URL)
+# Base de données (Render Postgres)
 # =====================
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
+    'default': dj_database_url.parse(
+        os.environ.get("DATABASE_URL"),
         conn_max_age=600,
         ssl_require=True
     )
@@ -81,10 +80,10 @@ DATABASES = {
 # Validation des mots de passe
 # =====================
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
 # =====================
@@ -96,7 +95,7 @@ USE_I18N = True
 USE_TZ = True
 
 # =====================
-# Fichiers statiques et médias
+# Statics et Media
 # =====================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
